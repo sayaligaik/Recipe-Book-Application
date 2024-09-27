@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Add Recipe</title>
+</head>
+<body>
+    <header>
+        <h1>Add Recipe</h1>
+    </header>
+
+    <main>
+        <form id="recipe-form">
+            <label for="title">Recipe Title:</label>
+            <input type="text" id="title" required>
+            <label for="ingredients">Ingredients:</label>
+            <textarea id="ingredients" required></textarea>
+            <label for="instructions">Instructions:</label>
+            <textarea id="instructions" required></textarea>
+            <button type="submit">Add Recipe</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('recipe-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const ingredients = document.getElementById('ingredients').value;
+            const instructions = document.getElementById('instructions').value;
+
+            fetch('/api/recipes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, ingredients, instructions })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Recipe added successfully!');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>
